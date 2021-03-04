@@ -10,6 +10,8 @@ from scipy.stats import binned_statistic
 from matplotlib import cm
 from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
+from os.path import isdir
+from os import mkdir
 
 """
 This script computes the plane dlog(ssfr)(ssfr|M)/dlog(ssfr) for each 
@@ -44,6 +46,13 @@ data_sets_names = [
                     'EAGLE50',
                     'EAGLE25'                    
                     ]
+
+
+if not isdir('simu_data/simu_derived_data'):
+    mkdir('simu_data/derived_data')
+    print('Folder created: simu_data/simu_derived_data')
+    
+
 # %%
 
 ssfr_bin_edges = np.arange(-16, -7, 0.2)
