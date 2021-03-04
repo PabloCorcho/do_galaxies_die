@@ -6,7 +6,7 @@ Created on Mon Jan 18 09:34:57 2021
 @author: pablo
 """
 
-import pandas as pd
+from astropy.io import fits
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -18,24 +18,24 @@ simus = ['TNG100-1', 'TNG300-1']
 
 for simu in simus:
     
-    data_table = 'simu_data/'+simu+'_sfrs.csv'
+    data_table = 'simu_data/'+simu+'_sfrs.fits'
     
-    df = pd.read_csv(data_table)
+    hdul = fits.open(data_table)[1]
     
-    ids = df['ID'].values
-    instantaneous_sfr = df['inst_sfr'].values
-    instantaneous_sfr_2r = df['inst_sfr_tworad'].values
-    sfr_100 = df['100myr_sfr'].values
-    sfr_300 = df['300myr_sfr'].values
-    sfr_1000 = df['1000myr_sfr'].values
-    sfr_100_2r = df['100myr_sfr_tworad'].values
-    sfr_300_2r = df['300myr_sfr_tworad'].values
-    sfr_1000_2r = df['1000myr_sfr_tworad'].values
-    dead_time = df['dead_time'].values
+    ids = hdul.data['ID']
+    instantaneous_sfr = hdul.data['inst_sfr']
+    instantaneous_sfr_2r = hdul.data['inst_sfr_tworad']
+    sfr_100 = hdul.data['100myr_sfr']
+    sfr_300 = hdul.data['300myr_sfr']
+    sfr_1000 = hdul.data['1000myr_sfr']
+    sfr_100_2r = hdul.data['100myr_sfr_tworad']
+    sfr_300_2r = hdul.data['300myr_sfr_tworad']
+    sfr_1000_2r = hdul.data['1000myr_sfr_tworad']
+    dead_time = hdul.data['dead_time']
     
-    total_stellar_mass = df['total_stellar_mass'].values
+    total_stellar_mass = hdul.data['total_stellar_mass']
     lgm= np.log10(total_stellar_mass)
-    total_stellar_mass_2r = df['total_stellar_mass_tworad'].values
+    total_stellar_mass_2r = hdul.data['total_stellar_mass_tworad']
     lgm_2r= np.log10(total_stellar_mass_2r)
     
     qg_inst = np.where(instantaneous_sfr==0)[0]
