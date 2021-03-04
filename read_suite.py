@@ -1,6 +1,4 @@
 import numpy as np
-from matplotlib import pyplot as plt
-plt.rcParams["font.family"] = "DejaVu Sans"
 from astropy.io import fits
 
 
@@ -119,10 +117,8 @@ class Compute_plane(object):
 if __name__ == '__main__':
     
     path = 'simu_data/tng300-1.fits'
-    # path = 'data/MAGNETICUM.fits'
     
-    my_set = DataSet(path)
-    
+    my_set = DataSet(path)    
     my_set.mass_filter(min_mass=10**8.5, max_mass=10**11.5)
     
     

@@ -1,11 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-Created on Mon Jan 18 09:34:57 2021
-
-@author: pablo
-"""
-
 from astropy.io import fits
 import numpy as np
 from matplotlib import pyplot as plt

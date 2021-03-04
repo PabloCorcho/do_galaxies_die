@@ -1,14 +1,6 @@
 from read_suite import DataSet, Compute_plane
 import numpy as np
-from matplotlib import pyplot as plt
 from astropy.io import fits
-
-from glob import glob
-
-from scipy.stats import binned_statistic
-
-from matplotlib import cm
-from matplotlib.colors import ListedColormap, LinearSegmentedColormap
 
 from os.path import isdir
 from os import mkdir
