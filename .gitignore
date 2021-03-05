@@ -60,7 +60,8 @@ MANIFEST
 *.ipynb_checkpoints
 
 # Images and data
-figures/*
+figures/
+simu_data/derived_data/
 *.png
 *.fits
 *.fits.gz

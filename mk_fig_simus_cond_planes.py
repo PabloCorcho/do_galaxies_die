@@ -71,12 +71,10 @@ simcolors = simcolors[:len(data_sets_names)]
 # =============================================================================
 
 # conditional distribution in mass bins figure
-fig1, axs1 = plt.subplots(nrows=3, ncols=3, figsize=(6,6), 
-                          gridspec_kw={'hspace':0.1, 'wspace':0.1})
-fig2, axs2 = plt.subplots(nrows=3, ncols=3, figsize=(6,6), 
-                          gridspec_kw={'hspace':0.1, 'wspace':0.1})
-
-
+fig1, axs1 = plt.subplots(nrows=3, ncols=3, figsize=(6, 6),
+                          gridspec_kw={'hspace': 0.1, 'wspace': 0.1})
+fig2, axs2 = plt.subplots(nrows=3, ncols=3, figsize=(6, 6),
+                          gridspec_kw={'hspace': 0.1, 'wspace': 0.1})
 
 ssfr_bin_edges = np.arange(-16, -7, .2)
 ssfr_bins = (ssfr_bin_edges[:-1] + ssfr_bin_edges[1:])/2
@@ -94,150 +92,150 @@ axs3 = axs3.flatten()
 # positions =[0,1,2,]
 
 for ith, data_i in enumerate(data_sets_names.keys()):
-    
-    hdul = fits.open('simu_data/simu_derived_data/'+data_sets_names[data_i]+
+
+    hdul = fits.open('simu_data/derived_data/'+data_sets_names[data_i] +
                      '_planes.fits')
-    
+
     density_plane = hdul[2].data
     cumulative_plane = hdul[3].data
     cumulative_plane_filtered = hdul[4].data
-    
-    M = hdul[1].data['mass'] # masses of all galaxies
+
+    M = hdul[1].data['mass']  # masses of all galaxies
     # masses of galaxies with sfr>0
     M_filtered = hdul[1].data['mass_filtered'][:cumulative_plane_filtered.shape[0]]
-    
+
     ssfr_bins = hdul[1].data['ssfr_bins'][:density_plane.shape[1]]
-    
+
     print('Data set ', ith+1)
     print('--> '+data_sets_names[data_i], M.size, M_filtered.size)
 
-    
-    # PLOT                                                                                                                                                                                                      
-    
+    # PLOT
+
     ax = axs1.flatten()[ith]
-    mappable = ax.contourf(M, ssfr_bins, 
+    mappable = ax.contourf(M, ssfr_bins,
                            cumulative_plane.T,
-                           levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
+                           levels=[0.05, 0.16, 0.5, 0.84, 0.95],
                            colors=conturf_colors)
-    
-    
-    CS = ax.contour(lgm, ssfr, F_lgm_ssfr_vmax, levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
-            colors='k', linewidths=[1, 1.5, 3.5, 1.5, 1], linestyles=['solid'])
-    
+
+    CS = ax.contour(lgm, ssfr, F_lgm_ssfr_vmax,
+                    levels=[0.05, 0.16, 0.5, 0.84, 0.95],
+                    colors='k',
+                    linewidths=[1, 1.5, 3.5, 1.5, 1], linestyles=['solid'])
+
     # ax.clabel(CS, inline=True, fontsize=7)
-    
-    CS = ax.contour(lgm, ssfr, gama_F_lgm_ssfr_vmax, levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
-            colors='k', linewidths=[1, 1.5,3.5,1.5, 1], linestyles=['dashed'])
-    
-    
-    ax.annotate(data_sets_names[data_i], xy=(.05, .05), 
+
+    CS = ax.contour(lgm, ssfr, gama_F_lgm_ssfr_vmax,
+                    levels=[0.05, 0.16, 0.5, 0.84, 0.95],
+                    colors='k',
+                    linewidths=[1, 1.5, 3.5, 1.5, 1], linestyles=['dashed'])
+
+    ax.annotate(data_sets_names[data_i], xy=(.05, .05),
                 xycoords='axes fraction', va='bottom',
                 ha='left', fontsize=12)
-    
+
     # ax.clabel(CS, inline=True, fontsize=7)
     ax.set_ylim(-16., -8.5)
     ax.set_xlim(8.5, 11.5)
-    ax.set_xticks([9,10,11])
-    
+    ax.set_xticks([9, 10, 11])
+
     # plt.colorbar(mappable, ax=ax)
-    
+
     ax.tick_params(direction='in', top=True, right=True, labelleft=False,
                    labelbottom=False, width=1, length=6)
-    if (ith==0)|(ith==3)|(ith==6):
+    if (ith == 0) | (ith == 3) | (ith == 6):
         ax.tick_params(labelleft=True)
         ax.set_ylabel(r'$\log(sSFR/yr)$')
-    if (ith==6)|(ith==7)|(ith==8):
+    if (ith == 6) | (ith == 7) | (ith == 8):
         ax.tick_params(labelbottom=True)
         ax.set_xlabel(r'$\log(M/M_\odot)$')
-        
+
     # ax.annotate(data_sets_names[data_i], xy=(.96, .94), xycoords='axes fraction', va='top',
     #             ha='right', fontsize=12)
-   
-    
-    # conditional figure -----------------------------------------------------
-    
-    for jth in range(lgm_bins.size):
-        mask = (M>lgm_bin_edges[jth])&(M<lgm_bin_edges[jth+1])
-        
-        ax = axs3[jth]
-        
-        mask_obs = (lgm>lgm_bin_edges[jth])&(lgm<lgm_bin_edges[jth+1])
 
-        ax.fill_between(x=ssfr, y1=np.nanmean(all_lgm_ssfr_pdf_vmax[:, mask_obs], axis=1),
-                        y2=0, hatch='/', alpha=0.1/len(data_sets_names), color='k')
-        
-        ax.fill_between(x=ssfr, y1=np.nanmean(gama_all_lgm_ssfr_pdf_vmax[:, mask_obs], axis=1),
-                        y2=0, hatch='o', alpha=0.1/len(data_sets_names), color='k')
-        
+    # conditional figure -----------------------------------------------------
+
+    for jth in range(lgm_bins.size):
+        mask = (M > lgm_bin_edges[jth]) & (M < lgm_bin_edges[jth+1])
+
+        ax = axs3[jth]
+
+        mask_obs = (lgm > lgm_bin_edges[jth]) & (lgm < lgm_bin_edges[jth+1])
+
+        ax.fill_between(x=ssfr, y1=np.nanmean(
+            all_lgm_ssfr_pdf_vmax[:, mask_obs], axis=1),
+            y2=0, hatch='/', alpha=0.1/len(data_sets_names), color='k')
+
+        ax.fill_between(x=ssfr, y1=np.nanmean(
+            gama_all_lgm_ssfr_pdf_vmax[:, mask_obs], axis=1),
+            y2=0, hatch='o', alpha=0.1/len(data_sets_names), color='k')
+
         ax.plot(ssfr_bins, np.nanmean(density_plane[mask, :], axis=0),
-                color=simcolors[ith], label=data_sets_names[data_i], 
+                color=simcolors[ith], label=data_sets_names[data_i],
                 ls=sim_ls[ith], alpha=0.95, lw=2)
-        
-        
+
         ax.set_yscale('symlog', linthresh=0.001)
         ax.set_ylim(0, np.nanmax(density_plane))
         ax.tick_params(direction='in', top=True, right=True)
-        
+
         if data_sets_names[data_i] == 'EAGLE25':
-            ax.annotate( '{:04.2f}'.format(lgm_bins[jth]), xy=(.96,.90),
-                        xycoords='axes fraction', ha='right', va='top')                        
-            if jth ==0:
+            ax.annotate('{:04.2f}'.format(lgm_bins[jth]), xy=(.96, .90),
+                        xycoords='axes fraction', ha='right', va='top')
+            if jth == 0:
                 ax.set_ylabel(r'$\frac{dp(log(sSFR)|M)}{dlog(sSFR)}$', fontsize=14)
-                
-            if (jth==6)|(jth==7)|(jth==8):
+
+            if (jth == 6) | (jth == 7) | (jth == 8):
                 ax.set_xlabel(r'$\log(sSFR/yr)$', fontsize=14)
-                
+
         ax.set_yticks([1e-3, 1e-2, 1e-1, 1])
         ax.set_xticks([-16, -14, -12, -10, -8])
         # ax.set_yticklabels(['0.001', '0.01', '0.1', '1'])
     if data_sets_names[data_i] == 'EAGLE25':
         axs3[1].legend(loc='upper center', ncol=3, bbox_to_anchor=(0.5, 1.8),
-                        fontsize=12, framealpha=1, edgecolor='k')
-    #------------------------------------------------------------------------
-    
+                       fontsize=12, framealpha=1, edgecolor='k')
+    # ------------------------------------------------------------------------
+
     # Filtered (sfr=0) plane
     ax = axs2.flatten()[ith]
-   
-    mappable = ax.contourf(M_filtered, ssfr_bins, 
+
+    mappable = ax.contourf(M_filtered, ssfr_bins,
                            cumulative_plane_filtered.T,
-                           levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
+                           levels=[0.05, 0.16, 0.5, 0.84, 0.95],
                            colors=conturf_colors)
-    
-    
-    
-    CS = ax.contour(lgm, ssfr, F_lgm_ssfr_vmax, levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
-            colors='k', linewidths=[1, 1.5,3.5,1.5, 1], linestyles=['solid'])
+
+    CS = ax.contour(lgm, ssfr, F_lgm_ssfr_vmax,
+                    levels=[0.05, 0.16, 0.5, 0.84, 0.95],
+                    colors='k',
+                    linewidths=[1, 1.5, 3.5, 1.5, 1], linestyles=['solid'])
     # ax.clabel(CS, inline=True, fontsize=7)
-    
-    CS = ax.contour(lgm, ssfr, gama_F_lgm_ssfr_vmax, levels=[0.05, 0.16, 0.5, 0.84, 0.95], 
-            colors='k', linewidths=[1, 1.5,3.5,1.5, 1], linestyles=['dashed'])
-    
-    
+
+    CS = ax.contour(lgm, ssfr, gama_F_lgm_ssfr_vmax,
+                    levels=[0.05, 0.16, 0.5, 0.84, 0.95],
+                    colors='k',
+                    linewidths=[1, 1.5, 3.5, 1.5, 1], linestyles=['dashed'])
+
     # ax.clabel(CS, inline=True, fontsize=7)
-    
+
     ax.set_xlim(8.5, 11.5)
     ax.set_ylim(-16., -8.5)
-    ax.set_xticks([9,10,11])
-    
-    
+    ax.set_xticks([9, 10, 11])
+
     ax.tick_params(direction='in', top=True, right=True, labelleft=False,
                    labelbottom=False, width=1, length=6)
     # if positions[ith][1][0]==0:
     #     ax.tick_params(labelleft=True)
     #     ax.set_ylabel(r'$\log(sSFR/yr)$')
-        
-    ax.annotate(data_sets_names[data_i], xy=(.05, .05), 
+
+    ax.annotate(data_sets_names[data_i], xy=(.05, .05),
                 xycoords='axes fraction', va='bottom',
                 ha='left', fontsize=12)
-    
-   
-    if (ith==0)|(ith==3)|(ith==6):
+
+    if(ith == 0) | (ith == 3) | (ith == 6):
         ax.tick_params(labelleft=True)
         ax.set_ylabel(r'$\log(sSFR/yr)$')
-    if (ith==6)|(ith==7)|(ith==8):
+    if (ith == 6) | (ith == 7) | (ith == 8):
         ax.tick_params(labelbottom=True)
         ax.set_xlabel(r'$\log(M/M_\odot)$')
-   
+
 ax = fig1.add_subplot(111)
 cbar_ax = ax.inset_axes([0.15, 1.10, 0.7, 0.02])
 ax.axis('off')
@@ -255,8 +253,8 @@ cb.set_label(label='Cumulative probability', labelpad=-50)
 ax.annotate('b', xy=(-0.1, 1.05), xycoords='axes fraction', weight='bold',
             fontsize=16)
 
-    
-print('Process completed')    
+
+print('Process completed')
 
 fig3.subplots_adjust(wspace=0.05, hspace=0.05)
 
@@ -264,4 +262,3 @@ fig1.savefig('figures/cprob_all_simus.png', bbox_inches='tight')
 fig2.savefig('figures/cprob_all_simus_flitered.png', bbox_inches='tight')
 
 fig3.savefig('figures/cprob_mass_bins.png', bbox_inches='tight')
-

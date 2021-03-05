@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Plot Fig. 4a from Corcho-Caballero et al. (2021)."""
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -15,14 +19,14 @@ data = fits.open(data_path)
 photo = pd.read_csv(abs_photometry_path)
 
 lgm_p50 = data[1].data['lgm_tot_p50']
-mass_mask = np.where(lgm_p50>=8.5)[0]
+mass_mask = np.where(lgm_p50 >= 8.5)[0]
 
 photo = pd.read_csv(abs_photometry_path)
 
 vmax = photo['Vmax'].values
 w = 1/vmax
 w = w[mass_mask]
-        
+
 ssfr_p2p5 = data[1].data['specsfr_tot_p2p5'][mass_mask]
 ssfr_p16 = data[1].data['specsfr_tot_p16'][mass_mask]
 ssfr_p50 = data[1].data['specsfr_tot_p50'][mass_mask]

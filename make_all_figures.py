@@ -1,14 +1,10 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
+Call the scripts that produce the figures in Corcho-Caballero et al. (2021).
+
 Created on Thu Mar  4 12:13:26 2021
-
 @author: pablo
-"""
-
-"""
-This script calls all relevant additional scripts to produce the figures 
-shown in this work
 """
 
 # =============================================================================

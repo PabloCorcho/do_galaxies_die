@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""Plot Fig. 4b from Corcho-Caballero et al. (2021)."""
+
 import numpy as np
 from matplotlib import pyplot as plt
 
@@ -7,11 +11,11 @@ data_path = 'obs_data/gama_sample.csv'
 data = pd.read_csv(data_path)
 
 lgm_p50 = data['lgm_tot_p50']
-mass_mask = np.where(lgm_p50>=8.5)[0]
+mass_mask = np.where(lgm_p50 >= 8.5)[0]
 
 
 w = data['weights'][mass_mask].values
-    
+
 ssfr_p2p5 = data['specsfr_tot_p2p5'][mass_mask].values
 ssfr_p16 = data['specsfr_tot_p16'][mass_mask].values
 ssfr_p50 = data['specsfr_tot_p50'][mass_mask].values
