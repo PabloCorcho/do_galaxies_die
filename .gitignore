@@ -59,32 +59,10 @@ MANIFEST
 
 # notebooks
 *.ipynb_checkpoints
-docs/_static/notebooks
-docs/modeling/gallery
-docs/tutorials/fit_result_LogParabola.yaml
-docs/tutorials/model-best-fit.yaml
-docs/tutorials/crab-3datasets
-docs/tutorials/analysis_1
-docs/tutorials/analysis_3d
-docs/tutorials/event_sampling
-docs/tutorials/*.yaml
-docs/tutorials/*.dat
-docs/tutorials/*.reg
 
-gammapy-datasets
-temp
-
-gammapy/gammapy.cfg
-
-docs/_generated
-docs/api
-.coverage
-
-dev/crab
-
-# Data files generated in docs building
-#!tutorials/images/*
-#*.png
+# Images and data
+*.png
 *.fits
 *.fits.gz
 *.root
+
