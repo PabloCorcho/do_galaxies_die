@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-Created on Fri Feb 26 11:19:31 2021
+Plot Figs. 1 and 2 from Corcho-Caballero et al. (2021).
 
+This script computes the plane dlog(ssfr)(ssfr|M)/dlog(ssfr) both density and
+cumulative.
+
+Created on Fri Feb 26 11:19:31 2021.
 @author: pablo
 """
 
@@ -10,31 +14,25 @@ import numpy as np
 from matplotlib import pyplot as plt
 from astropy.io import fits
 
-
-"""
-This script computes the plane dlog(ssfr)(ssfr|M)/dlog(ssfr) both density and
-cumulative. 
-
-"""
-
 # =============================================================================
 # SDSS & GAMA probability planes
 # =============================================================================
 
 extra_path = 'obs_data/derived_data/'
-gama_all_lgm_ssfr_pdf_vmax = np.loadtxt(extra_path+'gama_fundamentalplane_vmax.txt') 
+gama_all_lgm_ssfr_pdf_vmax = np.loadtxt(extra_path+'gama_fundamentalplane_vmax.txt')
 all_lgm_ssfr_pdf_vmax = np.loadtxt(extra_path+'sdss_fundamentalplane_vmax.txt')
 
-ssfr, dssfr = np.loadtxt(extra_path+'gama_prior_ssfr.txt', usecols=(0,1),
-                         unpack=True) 
-lgm, dlgm = np.loadtxt(extra_path+'gama_prior_lgm.txt', usecols=(0,1),
-                         unpack=True) 
-print('2D Histrograms with:\n - {} Mass bins\n - {} sSFR bins'.format(lgm.size, ssfr.size))
+ssfr, dssfr = np.loadtxt(extra_path+'gama_prior_ssfr.txt', usecols=(0, 1),
+                         unpack=True)
+lgm, dlgm = np.loadtxt(extra_path+'gama_prior_lgm.txt', usecols=(0, 1),
+                       unpack=True)
+print('2D Histrograms with:\n - {} Mass bins\n - {} sSFR bins'.format(
+    lgm.size, ssfr.size))
 
 
-print('Computing conditional probability dp(ssfr|M)dssfr') 
-norm_lgm_ssfr_vmax = np.sum(all_lgm_ssfr_pdf_vmax*dssfr[:, np.newaxis], axis=0)    
-norm_gama_lgm_ssfr_vmax = np.sum(gama_all_lgm_ssfr_pdf_vmax*dssfr[:, np.newaxis], axis=0)    
+print('Computing conditional probability dp(ssfr|M)dssfr')
+norm_lgm_ssfr_vmax = np.sum(all_lgm_ssfr_pdf_vmax*dssfr[:, np.newaxis], axis=0)
+norm_gama_lgm_ssfr_vmax = np.sum(gama_all_lgm_ssfr_pdf_vmax*dssfr[:, np.newaxis], axis=0)
 all_lgm_ssfr_pdf_vmax /= norm_lgm_ssfr_vmax[np.newaxis, :]
 gama_all_lgm_ssfr_pdf_vmax /= norm_gama_lgm_ssfr_vmax[np.newaxis, :]
 
@@ -49,22 +47,21 @@ gama_F_lgm_ssfr_vmax = np.cumsum(gama_all_lgm_ssfr_pdf_vmax*dssfr[:, np.newaxis]
 # =============================================================================
 
 data_sets_names = {
-                     'MAGNETICUM.fits':'MAG500',
-                     'tng300-1.fits':'IllustrisTNG300',
-                    'tng100-1.fits':'IllustrisTNG100',                    
-                    'SIMBA_m100n1024_151.fits':'SIMBA150',                    
-                    'SIMBA_m50n512_151.fits':'SIMBA75',
-                    'SIMBA_m25n512_151.fits':'SIMBA35',
-                    'RefL0100N1504.fits':'EAGLE100',
-                    'RefL0050N0752.fits':'EAGLE50',                    
-                    'RefL0025N0752.fits':'EAGLE25'
+                    'MAGNETICUM.fits': 'MAG500',
+                    'tng300-1.fits': 'IllustrisTNG300',
+                    'tng100-1.fits': 'IllustrisTNG100',
+                    'SIMBA_m100n1024_151.fits': 'SIMBA150',
+                    'SIMBA_m50n512_151.fits': 'SIMBA75',
+                    'SIMBA_m25n512_151.fits': 'SIMBA35',
+                    'RefL0100N1504.fits': 'EAGLE100',
+                    'RefL0050N0752.fits': 'EAGLE50',
+                    'RefL0025N0752.fits': 'EAGLE25'
                   }
 
 
 simcolors = ['darkgreen', 'darkgreen', 'darkgreen',
              'darkorange', 'darkorange', 'darkorange',
-             'crimson', 'crimson',
-              'crimson']
+             'crimson', 'crimson', 'crimson']
 
 sim_ls = ['-', '--', ':', '-', '--', ':', '-', '--', ':']
 
