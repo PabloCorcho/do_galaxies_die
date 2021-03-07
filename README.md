@@ -11,42 +11,43 @@ cd do_galaxies_die
 ```
 Run
 ```
-compute_simus_planes.py
+python compute_simus_planes.py
 ```
-This code will compute the probability maps corresponding to each simulation included in **simu_data**.
+This code will compute the probability maps corresponding to each simulation included in **simu_data**. 1.7 Gb of memory will be necessary to store the output results.
 
 Then run
 ```
-make_all_figures.py
+python make_all_figures.py
 ```
-This code will generate all the figures shown in Corcho et al. 2021
+This code will generate all the figures presented in Corcho et al. 2021
 
 ### Individual figures
 
 If you want to replot a single figure, you can directly run the following scripts:
 
 - Figs. 1 & 2: 
-```mk_fig_simus_cond_planes.py
+```
+python mk_fig_simus_cond_planes.py
 ```
 - Figs. 3 & 8: 
 ```
-mk_fig_detection.py
+python mk_fig_detection.py
 ```
 
 - Fig. 4: 
 ```
-mk_fig_sdss_uncertainties.py
-mk_fig_gama_uncertainties.py
+python mk_fig_sdss_uncertainties.py
+python mk_fig_gama_uncertainties.py
 ```
 
 - Figs. 5 & 6: 
 ```
-mk_TNG_sfrs_death_times.py
+python mk_TNG_sfrs_death_times.py
 ```
 
 - Fig. 7: 
 ```
-mk_fig_quenched_fractions.py
+python mk_fig_quenched_fractions.py
 ```
 
 # System Requirements
