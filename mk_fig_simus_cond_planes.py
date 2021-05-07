@@ -242,23 +242,23 @@ ax.axis('off')
 cb = plt.colorbar(mappable, cax=cbar_ax, orientation='horizontal')
 cb.ax.tick_params(labelsize=14)
 cb.set_label(label='Cumulative probability', labelpad=-50)
-ax.annotate('a', xy=(-0.1, 1.05), xycoords='axes fraction', weight='bold',
-            fontsize=16)
+# ax.annotate('a', xy=(-0.1, 1.05), xycoords='axes fraction', weight='bold',
+#             fontsize=16)
 ax = fig2.add_subplot(111)
 cbar_ax = ax.inset_axes([0.15, 1.10, 0.7, 0.02])
 ax.axis('off')
 cb = plt.colorbar(mappable, cax=cbar_ax, orientation='horizontal')
 cb.ax.tick_params(labelsize=14)
 cb.set_label(label='Cumulative probability', labelpad=-50)
-ax.annotate('b', xy=(-0.1, 1.05), xycoords='axes fraction', weight='bold',
-            fontsize=16)
+# ax.annotate('b', xy=(-0.1, 1.05), xycoords='axes fraction', weight='bold',
+#             fontsize=16)
 
 
 print('Process completed')
 
 fig3.subplots_adjust(wspace=0.05, hspace=0.05)
 
-fig1.savefig('figures/cprob_all_simus.png', bbox_inches='tight')
-fig2.savefig('figures/cprob_all_simus_flitered.png', bbox_inches='tight')
+fig1.savefig('figures/cprob_all_simus.pdf', bbox_inches='tight')
+fig2.savefig('figures/cprob_all_simus_flitered.pdf', bbox_inches='tight')
 
-fig3.savefig('figures/cprob_mass_bins.png', bbox_inches='tight')
+fig3.savefig('figures/cprob_mass_bins.pdf', bbox_inches='tight')

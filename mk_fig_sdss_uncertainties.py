@@ -84,11 +84,11 @@ cbar = plt.colorbar(mappable=mappable, ax=ax, label=r'$\log(sSFR_{50})$')
 cbar.set_alpha(1)
 cbar.draw_all()
 
-ax.annotate('a',xy=(-.15, 1.05), xycoords='axes fraction',
-            ha='left',
-            color='k',
-            fontweight='bold',
-            fontsize=15)
+# ax.annotate('a',xy=(-.15, 1.05), xycoords='axes fraction',
+#             ha='left',
+#             color='k',
+#             fontweight='bold',
+#             fontsize=15)
 
 ax.plot([0, 1.5], [0, 1.5], 'k--')
 epsilon = np.linspace(0,1)

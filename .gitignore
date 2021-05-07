@@ -67,3 +67,5 @@ simu_data/derived_data/
 *.fits.gz
 *.root
 
+# Article
+paper/

@@ -98,9 +98,9 @@ for simu in simus:
              lw=2,
              label=r'$SFR_{1000}$')
 
-    panel = {'TNG100-1': 'a', 'TNG300-1': 'b'}
-    plt.annotate(panel[simu], xy=(-.2, .95), xycoords='axes fraction',
-                 weight="bold", fontsize=15)
+    # panel = {'TNG100-1': 'a', 'TNG300-1': 'b'}
+    # plt.annotate(panel[simu], xy=(-.2, .95), xycoords='axes fraction',
+    #              weight="bold", fontsize=15)
 
     plt.minorticks_on()
     plt.tick_params(which='both', direction='in', top=True, right=True)
@@ -160,9 +160,9 @@ for simu in simus:
              color='red',
              histtype='step', lw=2, ls='--', label=r'$sSFR_{300}$', alpha=1)
 
-    panel = {'TNG100-1': 'a', 'TNG300-1': 'b'}
-    plt.annotate(panel[simu], xy=(-.15, .95), xycoords='axes fraction',
-                 weight="bold", fontsize=15)
+    # panel = {'TNG100-1': 'a', 'TNG300-1': 'b'}
+    # plt.annotate(panel[simu], xy=(-.15, .95), xycoords='axes fraction',
+    #              weight="bold", fontsize=15)
 
     plt.xscale('symlog', linthresh=1e-14)
     plt.xlabel(r'$sSFR~[yr^{-1}]$')
